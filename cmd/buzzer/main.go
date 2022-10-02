@@ -5,6 +5,7 @@ import (
 
     "github.com/scareyo/buzzer/pkg/config"
     "github.com/scareyo/buzzer/pkg/handler"
+    "github.com/scareyo/buzzer/pkg/model"
 )
 
 func main() {
@@ -14,7 +15,10 @@ func main() {
         fmt.Println(err)
     }
 
-    voice := new (handler.VoiceHandler)
-    voice.Start(cfg.VoicePort)
+    buzzer := new(model.Buzzer)
+    buzzer.Start()
+
+    voice := new(handler.VoiceHandler)
+    voice.Start(cfg.VoicePort, cfg.Timeout)
 }
 
