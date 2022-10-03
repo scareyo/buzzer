@@ -2,6 +2,7 @@ package handler
 
 import (
     "fmt"
+    "net"
     "net/http"
     
     "github.com/scareyo/buzzer/pkg/event"
@@ -13,18 +14,18 @@ type VoiceHandler struct {
     timeout int
 }
     
-func (vh VoiceHandler) Start(port string, timeout int) {
-    fmt.Println("Starting buzzer server on port " + port)
+func (vh VoiceHandler) Start(listener net.Listener, timeout int) {
+    fmt.Println("Starting HTTP server")
 
     vh.timeout = timeout
 
-    http.HandleFunc("/voice/receive", vh.receiveCall);
-    http.HandleFunc("/voice/update", vh.updateCall);
+    mux := http.NewServeMux()
 
-    err := http.ListenAndServe(":" + port, nil)
-    if err != nil {
-        fmt.Println("error starting http server")
-    }
+    mux.HandleFunc("/voice/receive", vh.receiveCall);
+    mux.HandleFunc("/voice/update", vh.updateCall);
+
+    server := &http.Server{Handler: mux}
+    server.Serve(listener)
 }
 
 func (vh VoiceHandler) receiveCall(w http.ResponseWriter, r *http.Request) {
