@@ -14,7 +14,7 @@ type GrpcHandler struct{
     pb.UnimplementedBuzzerServer
 }
 
-func (vh GrpcHandler) Start(listener net.Listener, port string) {
+func (vh GrpcHandler) Start(listener net.Listener) {
     fmt.Println("Starting gRPC server")
     server := grpc.NewServer()
     pb.RegisterBuzzerServer(server, &GrpcHandler{})

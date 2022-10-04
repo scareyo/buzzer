@@ -19,7 +19,7 @@ func main() {
     }
 
 
-    listener, err := net.Listen("tcp", ":" + cfg.VoicePort)
+    listener, err := net.Listen("tcp", ":" + cfg.Port)
     if err != nil {
         fmt.Println(err)
     }
@@ -35,7 +35,7 @@ func main() {
     go voice.Start(httpListener, cfg.Timeout)
 
     grpc := new(handler.GrpcHandler)
-    go grpc.Start(grpcListener, cfg.GrpcPort)
+    go grpc.Start(grpcListener)
 
     m.Serve()
 }

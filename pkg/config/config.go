@@ -4,11 +4,8 @@ import "github.com/kelseyhightower/envconfig"
 
 type Config struct {
 
-    // Port for Twilio API
-    VoicePort       string  `envconfig:"VOICE_PORT"`
-
-    // Port for frontend gRPC
-    GrpcPort        string  `envconfig:"GRPC_PORT"`
+    // TCP port
+    Port       string  `envconfig:"PORT"`
 
     // Timeout (seconds) for incoming calls
     Timeout         int     `envconfig:"TIMEOUT"`
