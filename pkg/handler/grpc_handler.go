@@ -21,6 +21,11 @@ func (vh GrpcHandler) Start(listener net.Listener) {
     server.Serve(listener)
 }
 
+func (vh *GrpcHandler) ListenDoor(in *pb.ListenDoorRequest, stream pb.Buzzer_ListenDoorServer) error {
+    fmt.Println("Received ListenDoorRequest: " + in.GetMessage())
+    return nil
+}
+
 func (vh *GrpcHandler) OpenDoor(ctx context.Context, in *pb.OpenDoorRequest) (*pb.OpenDoorReply, error) {
     fmt.Println("Received OpenDoorRequest: " + in.GetMessage())
     return &pb.OpenDoorReply{Message: "Hello"}, nil
