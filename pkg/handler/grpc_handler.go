@@ -6,6 +6,8 @@ import (
     "net"
 
     "google.golang.org/grpc"
+    
+    "github.com/scareyo/buzzer/pkg/event"
 
     pb "github.com/scareyo/buzzer/proto"
 )
@@ -16,6 +18,9 @@ type GrpcHandler struct{
 
 func (vh GrpcHandler) Start(listener net.Listener) {
     fmt.Println("Starting gRPC server")
+
+    event.CallUpdated.Register(vh)
+    
     server := grpc.NewServer()
     pb.RegisterBuzzerServer(server, &GrpcHandler{})
     server.Serve(listener)
@@ -33,3 +38,13 @@ func (vh *GrpcHandler) OpenDoor(ctx context.Context, in *pb.OpenDoorRequest) (*p
 
 func (vh GrpcHandler) updateCall() {
 }
+
+func (vh GrpcHandler) Handle(payload event.CallUpdatedPayload) {
+    switch payload.Status {
+    case "ringing":
+        fmt.Println("The phone is ringing")
+    case "completed":
+        fmt.Println("The phone is no longer ringing")
+    }
+}
+

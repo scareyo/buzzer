@@ -6,7 +6,6 @@ import (
 
     "github.com/scareyo/buzzer/pkg/config"
     "github.com/scareyo/buzzer/pkg/handler"
-    "github.com/scareyo/buzzer/pkg/model"
 
     "github.com/soheilhy/cmux"
 )
@@ -28,9 +27,6 @@ func main() {
     m := cmux.New(listener)
     grpcListener := m.Match(cmux.HTTP2HeaderField("content-type", "application/grpc"))
     httpListener := m.Match(cmux.HTTP1Fast())
-
-    buzzer := new(model.Buzzer)
-    buzzer.Start()
 
     voice := new(handler.VoiceHandler)
     go voice.Start(httpListener, cfg.Timeout)
