@@ -5,7 +5,7 @@ import "github.com/kelseyhightower/envconfig"
 type Config struct {
 
     // TCP port
-    Port       string  `envconfig:"PORT"`
+    Port            string  `envconfig:"PORT"`
 
     // Timeout (seconds) for incoming calls
     Timeout         int     `envconfig:"TIMEOUT"`

@@ -18,6 +18,7 @@ func main() {
         fmt.Println(err)
     }
 
+    fmt.Printf("Port: %s, Timeout: %d\n", cfg.Port, cfg.Timeout)
 
     listener, err := net.Listen("tcp", ":" + cfg.Port)
     if err != nil {
